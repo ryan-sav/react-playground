@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './ToDo.scss';
 
-function Todo() {
+const Todo = () => {
     const [tasksRemaining, setTasksRemaining] = useState(0);
 
     const [tasks, setTasks] = useState([
@@ -59,7 +59,7 @@ function Todo() {
     );
 }
 
-function CreateTask({ addTask }) {
+const CreateTask = ({ addTask }) => {
     const [value, setValue] = useState("");
 
     const handleSubmit = e => {
@@ -83,7 +83,12 @@ function CreateTask({ addTask }) {
     );
 }
 
-function Task({ task, index, completeTask, removeTask }) {
+const Task = ({
+    task,
+    index,
+    completeTask,
+    removeTask
+}) => {
     return (
         <div
             className="task"
