@@ -32,6 +32,12 @@ const Todo = () => {
         setTasks(newTasks);
     };
 
+    const unCompleteTask = index => {
+        const newTasks = [...tasks]
+        newTasks[index].completed = false;
+        setTasks(newTasks);
+    };
+
     const removeTask = index => {
         const newTasks = [...tasks];
         newTasks.splice(index, 1);
@@ -47,6 +53,7 @@ const Todo = () => {
                         task={task}
                         index={index}
                         completeTask={completeTask}
+                        unCompleteTask={unCompleteTask}
                         removeTask={removeTask}
                         key={index}
                     />
@@ -87,6 +94,7 @@ const Task = ({
     task,
     index,
     completeTask,
+    unCompleteTask,
     removeTask
 }) => {
     return (
@@ -96,7 +104,11 @@ const Task = ({
         >
             {task.title}
             <button style={{ background: "red" }} onClick={() => removeTask(index)}>x</button>
-            <button onClick={() => completeTask(index)}>Complete</button>
+            {task.completed ? (
+                <button onClick={() => unCompleteTask(index)}>Undo</button>) : (<button onClick={() => completeTask(index)}>Complete</button>)
+            }
+
+
         </div>
     );
 }
