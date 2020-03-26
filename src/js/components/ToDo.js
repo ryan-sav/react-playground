@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './ToDo.scss';
 
-function Todo() {
+const Todo = () => {
     const [tasksRemaining, setTasksRemaining] = useState(0);
 
     const [tasks, setTasks] = useState([
@@ -32,6 +32,12 @@ function Todo() {
         setTasks(newTasks);
     };
 
+    const unCompleteTask = index => {
+        const newTasks = [...tasks]
+        newTasks[index].completed = false;
+        setTasks(newTasks);
+    };
+
     const removeTask = index => {
         const newTasks = [...tasks];
         newTasks.splice(index, 1);
@@ -47,6 +53,7 @@ function Todo() {
                         task={task}
                         index={index}
                         completeTask={completeTask}
+                        unCompleteTask={unCompleteTask}
                         removeTask={removeTask}
                         key={index}
                     />
@@ -59,7 +66,7 @@ function Todo() {
     );
 }
 
-function CreateTask({ addTask }) {
+const CreateTask = ({ addTask }) => {
     const [value, setValue] = useState("");
 
     const handleSubmit = e => {
@@ -83,7 +90,13 @@ function CreateTask({ addTask }) {
     );
 }
 
-function Task({ task, index, completeTask, removeTask }) {
+const Task = ({
+    task,
+    index,
+    completeTask,
+    unCompleteTask,
+    removeTask
+}) => {
     return (
         <div
             className="task"
@@ -91,7 +104,11 @@ function Task({ task, index, completeTask, removeTask }) {
         >
             {task.title}
             <button style={{ background: "red" }} onClick={() => removeTask(index)}>x</button>
-            <button onClick={() => completeTask(index)}>Complete</button>
+            {task.completed ? (
+                <button onClick={() => unCompleteTask(index)}>Undo</button>) : (<button onClick={() => completeTask(index)}>Complete</button>)
+            }
+
+
         </div>
     );
 }
